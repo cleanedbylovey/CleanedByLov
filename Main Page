@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lovey Details | Mobile Car Detailing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage: #8aab8a;
+    --sage-light: #b5c9b5;
+    --sage-dark: #5e7d5e;
+    --cream: #faf7f2;
+    --warm-white: #f5f1ea;
+    --black: #1a1a1a;
+    --charcoal: #333;
+    --muted: #777;
+    --accent: #c8a96e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: rgba(250, 247, 242, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(138,171,138,0.2);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--sage-dark);
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--black); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--charcoal);
+    font-size: 0.88rem; font-weight: 500; letter-spacing: 0.05em;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--sage-dark); }
+  .nav-cta {
+    background: var(--sage-dark);
+    color: white !important;
+    padding: 0.55rem 1.3rem;
+    border-radius: 100px;
+  }
+  .nav-cta:hover { background: var(--sage) !important; color: white !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 2.5rem;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: 
+      radial-gradient(ellipse 60% 60% at 70% 50%, rgba(138,171,138,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,169,110,0.08) 0%, transparent 60%);
+  }
+  .hero-dots {
+    position: absolute; top: 15%; right: 8%;
+    width: 200px; height: 200px;
+    background-image: radial-gradient(circle, rgba(138,171,138,0.3) 1.5px, transparent 1.5px);
+    background-size: 18px 18px;
+    border-radius: 50%;
+  }
+  .hero-content {
+    position: relative; z-index: 1;
+    max-width: 700px;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(138,171,138,0.15);
+    border: 1px solid rgba(138,171,138,0.4);
+    color: var(--sage-dark);
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.4rem 1rem; border-radius: 100px;
+    margin-bottom: 1.8rem;
+  }
+  .hero-tag::before { content: '●'; font-size: 0.5rem; }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    font-weight: 900;
+    color: var(--black);
+    margin-bottom: 1.5rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--sage-dark);
+  }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--charcoal);
+    line-height: 1.7; max-width: 480px;
+    margin-bottom: 2.5rem; font-weight: 300;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--black); color: var(--cream);
+    padding: 0.9rem 2rem; border-radius: 100px;
+    text-decoration: none; font-weight: 500;
+    font-size: 0.9rem; letter-spacing: 0.03em;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+  .btn-secondary {
+    display: inline-block;
+    background: transparent; color: var(--black);
+    padding: 0.9rem 2rem; border-radius: 100px;
+    text-decoration: none; font-weight: 500;
+    font-size: 0.9rem; letter-spacing: 0.03em;
+    border: 1.5px solid rgba(0,0,0,0.25);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--sage-dark); color: var(--sage-dark); }
+  .hero-card {
+    position: absolute; right: 5%; top: 50%;
+    transform: translateY(-50%);
+    width: clamp(280px, 38vw, 480px);
+    aspect-ratio: 4/5;
+    background: var(--warm-white);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.12), 0 0 0 1px rgba(138,171,138,0.2);
+    display: flex; flex-direction: column;
+  }
+  .hero-card-img {
+    flex: 1;
+    background: linear-gradient(135deg, #8aab8a 0%, #5e7d5e 40%, #3d5c3d 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem; user-select: none;
+  }
+  .hero-card-label {
+    padding: 1.2rem 1.5rem;
+    background: var(--warm-white);
+  }
+  .hero-card-label p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.2rem; }
+  .hero-card-label strong { font-size: 1rem; color: var(--black); }
+  .hero-stat {
+    position: absolute; left: -15px; bottom: 20%;
+    background: white;
+    border-radius: 16px;
+    padding: 1rem 1.3rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--sage-dark);
+  }
+  .hero-stat .lbl { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* SECTION COMMONS */
+  section { padding: 6rem 2.5rem; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--sage-dark);
+    margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .section-label::after {
+    content: ''; display: block;
+    width: 40px; height: 1px; background: var(--sage-light);
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+  .section-intro {
+    font-size: 1rem; color: var(--charcoal);
+    line-height: 1.75; max-width: 560px; font-weight: 300;
+  }
+
+  /* SERVICES */
+  .services { background: var(--warm-white); }
+  .services-inner { max-width: 1200px; margin: 0 auto; }
+  .services-head { margin-bottom: 3.5rem; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .service-card {
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 2.2rem;
+    border: 1px solid rgba(138,171,138,0.2);
+    transition: transform 0.25s, box-shadow 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--sage);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+  .service-icon {
+    font-size: 2rem; margin-bottom: 1.2rem;
+  }
+  .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; margin-bottom: 0.4rem;
+  }
+  .service-price {
+    font-size: 0.85rem; color: var(--sage-dark);
+    font-weight: 500; margin-bottom: 1.2rem;
+    letter-spacing: 0.03em;
+  }
+  .service-desc {
+    font-size: 0.9rem; color: var(--charcoal);
+    line-height: 1.7; margin-bottom: 1.5rem; font-weight: 300;
+  }
+  .service-list {
+    list-style: none; margin-bottom: 1.8rem;
+  }
+  .service-list li {
+    font-size: 0.85rem; color: var(--charcoal);
+    padding: 0.3rem 0;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .service-list li::before {
+    content: '✓'; color: var(--sage-dark); font-weight: 700;
+    font-size: 0.8rem;
+  }
+  .service-btn {
+    display: inline-block;
+    border: 1.5px solid var(--sage-dark);
+    color: var(--sage-dark);
+    padding: 0.6rem 1.4rem; border-radius: 100px;
+    text-decoration: none; font-size: 0.85rem; font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+  }
+  .service-btn:hover { background: var(--sage-dark); color: white; }
+
+  /* BEFORE/AFTER */
+  .gallery { background: var(--cream); }
+  .gallery-inner { max-width: 1200px; margin: 0 auto; }
+  .gallery-head { margin-bottom: 3.5rem; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .ba-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    background: white;
+  }
+  .ba-imgs {
+    display: grid; grid-template-columns: 1fr 1fr;
+    height: 200px;
+  }
+  .ba-img {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; position: relative;
+  }
+  .ba-img.before { background: linear-gradient(135deg, #c4b9a8, #a09080); }
+  .ba-img.after { background: linear-gradient(135deg, #8aab8a, #5e7d5e); }
+  .ba-label-overlay {
+    position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.55); color: white;
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.2rem 0.6rem; border-radius: 100px;
+  }
+  .ba-card-body { padding: 1.2rem 1.5rem; }
+  .ba-card-body h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; margin-bottom: 0.3rem;
+  }
+  .ba-card-body p { font-size: 0.82rem; color: var(--muted); }
+
+  /* WHY ME */
+  .why { background: var(--sage-dark); color: white; }
+  .why-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .why .section-label { color: var(--sage-light); }
+  .why .section-label::after { background: rgba(255,255,255,0.2); }
+  .why h2 { color: white; }
+  .why .section-intro { color: rgba(255,255,255,0.75); }
+  .why-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+  }
+  .why-item {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+  .why-item:hover { background: rgba(255,255,255,0.14); }
+  .why-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+  .why-item h4 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.3rem; color: white; }
+  .why-item p { font-size: 0.82rem; color: rgba(255,255,255,0.65); line-height: 1.6; }
+
+
+
+  /* BOOKING */
+  .booking {
+    background: var(--cream);
+    text-align: center;
+  }
+  .booking-inner { max-width: 680px; margin: 0 auto; }
+  .booking .section-label { justify-content: center; }
+  .booking .section-label::after { display: none; }
+  .booking h2 { margin-bottom: 1rem; }
+  .booking .section-intro { margin: 0 auto 2.5rem; text-align: center; }
+  .booking-form {
+    background: var(--warm-white);
+    border-radius: 24px;
+    padding: 2.5rem;
+    text-align: left;
+    border: 1px solid rgba(138,171,138,0.2);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--charcoal); }
+  .form-group input, .form-group select, .form-group textarea {
+    background: var(--cream);
+    border: 1.5px solid rgba(138,171,138,0.3);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--black);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--sage-dark);
+  }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-full { grid-column: 1 / -1; }
+  .form-submit {
+    width: 100%; margin-top: 1.5rem;
+    background: var(--black); color: var(--cream);
+    border: none; border-radius: 100px;
+    padding: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 500;
+    cursor: pointer; letter-spacing: 0.03em;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .form-submit:hover { background: var(--sage-dark); transform: translateY(-1px); }
+  .booking-or {
+    text-align: center; color: var(--muted);
+    font-size: 0.85rem; margin: 1.5rem 0;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .booking-or::before, .booking-or::after {
+    content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.1);
+  }
+  .dm-btn {
+    display: block; text-align: center;
+    border: 1.5px solid var(--black); color: var(--black);
+    border-radius: 100px; padding: 0.9rem 2rem;
+    text-decoration: none; font-weight: 500; font-size: 0.9rem;
+    transition: background 0.2s, color 0.2s;
+  }
+  .dm-btn:hover { background: var(--black); color: var(--cream); }
+
+  /* FAQ */
+  .faq { background: var(--warm-white); }
+  .faq-inner { max-width: 700px; margin: 0 auto; }
+  .faq-head { margin-bottom: 3rem; }
+  .faq-item {
+    border-bottom: 1px solid rgba(138,171,138,0.25);
+    padding: 1.4rem 0;
+  }
+  .faq-q {
+    font-size: 1rem; font-weight: 500;
+    color: var(--black); cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem; list-style: none; user-select: none;
+  }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-arrow {
+    color: var(--sage-dark); font-size: 1.2rem;
+    transition: transform 0.25s; flex-shrink: 0;
+  }
+  details[open] .faq-arrow { transform: rotate(45deg); }
+  .faq-a {
+    font-size: 0.9rem; color: var(--charcoal);
+    line-height: 1.75; padding-top: 0.8rem; font-weight: 300;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black); color: rgba(255,255,255,0.7);
+    padding: 3rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    color: white; font-size: 1.2rem;
+  }
+  .footer-logo span { color: var(--sage-light); }
+  footer p { font-size: 0.82rem; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a {
+    color: rgba(255,255,255,0.5); text-decoration: none;
+    font-size: 0.82rem; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--sage-light); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-card { display: none; }
+    .why-inner { grid-template-columns: 1fr; gap: 3rem; }
+  }
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    h1 { font-size: 2.6rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * {
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-tag { animation-delay: 0.1s; }
+  .hero-content h1 { animation-delay: 0.2s; }
+  .hero-sub { animation-delay: 0.35s; }
+  .hero-btns { animation-delay: 0.5s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Lovey<span>Details</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#booking" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Mobile Detailing · College Park, MD</div>
+    <h1>Clean Car.<br><em>Better Vibes.</em></h1>
+    <p class="hero-sub">You drive it. I revive it. Mobile car detailing that comes to you — affordable, thorough, and done right. Interior details, deep cleans, and full details available.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-primary">Book Now</a>
+      <a href="#services" class="btn-secondary">View Pricing →</a>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="hero-card-img">🚗</div>
+    <div class="hero-card-label">
+      <p>Latest transformation</p>
+      <strong>2019 Honda Civic — Full Detail</strong>
+    </div>
+    <div class="hero-stat">
+      <div class="num">100%</div>
+      <div class="lbl">Satisfaction</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-inner">
+    <div class="services-head">
+      <div class="section-label">What I Offer</div>
+      <h2>Packages for Every Need</h2>
+      <p class="section-intro">Simple, transparent pricing. I come to you — no driving to a shop, no waiting around.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🧹</div>
+        <h3>Basic Interior</h3>
+        <div class="service-price">Starting at $60</div>
+        <p class="service-desc">A thorough clean for everyday maintenance. Perfect if your car just needs some TLC.</p>
+        <ul class="service-list">
+          <li>Vacuum floors, seats & trunk</li>
+          <li>Wipe down dashboard & console</li>
+          <li>Clean cup holders & door pockets</li>
+          <li>Window cleaning (interior)</li>
+          <li>Air freshener finish</li>
+        </ul>
+        <a href="#booking" class="service-btn">Book This →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✨</div>
+        <h3>Deep Interior</h3>
+        <div class="service-price">Starting at $110</div>
+        <p class="service-desc">For the cars that have been through it. Stains, pet hair, mystery smells — handled.</p>
+        <ul class="service-list">
+          <li>Everything in Basic</li>
+          <li>Carpet & seat stain treatment</li>
+          <li>Pet hair removal</li>
+          <li>Leather/vinyl conditioning</li>
+          <li>Detailed crevice cleaning</li>
+        </ul>
+        <a href="#booking" class="service-btn">Book This →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌟</div>
+        <h3>Full Detail</h3>
+        <div class="service-price">Starting at $140</div>
+        <p class="service-desc">Interior AND exterior. The full glow-up. Walk out feeling like you just drove off the lot.</p>
+        <ul class="service-list">
+          <li>Everything in Deep Interior</li>
+          <li>Hand wash & dry exterior</li>
+          <li>Tire & rim clean</li>
+          <li>Exterior wipe-down & shine</li>
+          <li>Window clean inside & out</li>
+        </ul>
+        <a href="#booking" class="service-btn">Book This →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-inner">
+    <div class="gallery-head">
+      <div class="section-label">Transformations</div>
+      <h2>Before & After</h2>
+      <p class="section-intro">The results speak for themselves. These are real cars, real cleans.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="ba-card">
+        <div class="ba-imgs">
+          <div class="ba-img before">☕<span class="ba-label-overlay">Before</span></div>
+          <div class="ba-img after">✨<span class="ba-label-overlay">After</span></div>
+        </div>
+        <div class="ba-card-body">
+          <h4>Carpet Stain Removal</h4>
+          <p>Deep Interior · 2021 Toyota Corolla</p>
+        </div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-imgs">
+          <div class="ba-img before">🐾<span class="ba-label-overlay">Before</span></div>
+          <div class="ba-img after">🪑<span class="ba-label-overlay">After</span></div>
+        </div>
+        <div class="ba-card-body">
+          <h4>Pet Hair Deep Clean</h4>
+          <p>Deep Interior · 2018 Ford Escape</p>
+        </div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-imgs">
+          <div class="ba-img before">😬<span class="ba-label-overlay">Before</span></div>
+          <div class="ba-img after">😍<span class="ba-label-overlay">After</span></div>
+        </div>
+        <div class="ba-card-body">
+          <h4>Full Interior Restoration</h4>
+          <p>Full Detail · 2017 Honda Civic</p>
+        </div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-imgs">
+          <div class="ba-img before">🥤<span class="ba-label-overlay">Before</span></div>
+          <div class="ba-img after">🫧<span class="ba-label-overlay">After</span></div>
+        </div>
+        <div class="ba-card-body">
+          <h4>Cupholder & Console Clean</h4>
+          <p>Basic Interior · 2020 Nissan Altima</p>
+        </div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-imgs">
+          <div class="ba-img before">🌧️<span class="ba-label-overlay">Before</span></div>
+          <div class="ba-img after">💎<span class="ba-label-overlay">After</span></div>
+        </div>
+        <div class="ba-card-body">
+          <h4>Exterior Wash & Shine</h4>
+          <p>Full Detail · 2019 Chevy Malibu</p>
+        </div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-imgs">
+          <div class="ba-img before">🦮<span class="ba-label-overlay">Before</span></div>
+          <div class="ba-img after">🌿<span class="ba-label-overlay">After</span></div>
+        </div>
+        <div class="ba-card-body">
+          <h4>Floor Mat Restoration</h4>
+          <p>Deep Interior · 2016 Subaru Outback</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ME -->
+<section class="why">
+  <div class="why-inner">
+    <div>
+      <div class="section-label">Why Lovey Details</div>
+      <h2>The difference is in the details.</h2>
+      <p class="section-intro">I'm not a car wash machine. I'm a person who actually cares about your car, and it shows in the results.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">📍</div>
+        <h4>I Come to You</h4>
+        <p>Wherever you are in College Park: home, work, or campus.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🎓</div>
+        <h4>Student-Run</h4>
+        <p>Support local, support a student hustling the right way.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🔍</div>
+        <h4>Attention to Detail</h4>
+        <p>I get the crevices and corners the big shops skip every time.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">💸</div>
+        <h4>Affordable Rates</h4>
+        <p>Quality results without the dealership price tag.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">📅</div>
+        <h4>Flexible Scheduling</h4>
+        <p>Weekdays, weekends, mornings. We make it work.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">💳</div>
+        <h4>Cash & Card OK</h4>
+        <p>Venmo, Cash App, Zelle, or cash. Whatever's easiest.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="booking-inner">
+    <div class="section-label">Get Started</div>
+    <h2>Book Your Detail</h2>
+    <p class="section-intro">Fill out the form below and I'll reach out to confirm your appointment. Easy as that.</p>
+    <div class="booking-form">
+      <form action="https://formspree.io/f/maqknoko" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" name="name" placeholder="First & last name" required>
+        </div>
+        <div class="form-group">
+          <label>Phone or Email</label>
+          <input type="text" name="contact" placeholder="Best way to reach you" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Car (Year, Make, Model)</label>
+          <input type="text" name="car" placeholder="e.g. 2019 Honda Civic">
+        </div>
+        <div class="form-group">
+          <label>Service Wanted</label>
+          <select name="service">
+            <option value="">Select a package</option>
+            <option>Basic Interior (from $60)</option>
+            <option>Deep Interior (from $110)</option>
+            <option>Full Detail (from $140)</option>
+            <option>Not sure, help me decide</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Preferred Date</label>
+          <input type="date" name="date">
+        </div>
+        <div class="form-group">
+          <label>Preferred Time</label>
+          <select name="time">
+            <option>Morning (8am to 11am)</option>
+            <option>Midday (11am to 2pm)</option>
+            <option>Afternoon (2pm to 6pm)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-full">
+          <label>Anything I Should Know?</label>
+          <textarea name="notes" placeholder="Pet hair, bad stains, extra dirty, specific areas of concern..."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="form-submit">Send Booking Request ✓</button>
+      </form>
+      <div class="booking-or">or slide into my DMs</div>
+      <a href="https://instagram.com" class="dm-btn">📱 DM on Instagram to Book</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="faq-head">
+      <div class="section-label">Questions</div>
+      <h2>FAQ</h2>
+    </div>
+    <details class="faq-item">
+      <summary class="faq-q">Do you come to me? <span class="faq-arrow">+</span></summary>
+      <p class="faq-a">Yes! That's the whole point. I bring everything I need to your location: home, work, apartment parking lot, wherever. You don't have to go anywhere.</p>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">How long does it take? <span class="faq-arrow">+</span></summary>
+      <p class="faq-a">Basic Interior: 1 to 1.5 hours. Deep Interior: 2 to 3 hours. Full Detail: 3 to 4 hours. Timing can vary based on how dirty the car is. I'd rather do it right than rush.</p>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Do I need to provide water or electricity? <span class="faq-arrow">+</span></summary>
+      <p class="faq-a">Nope! I bring my own supplies and equipment. All I need is access to your car and a little bit of space to work around it.</p>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Is there an extra fee for really dirty cars? <span class="faq-arrow">+</span></summary>
+      <p class="faq-a">If your car is exceptionally dirty (heavy pet hair, bad stains, a lot of clutter), there may be a small extra fee. I'll always let you know upfront before I start. No surprise charges.</p>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">What payment methods do you accept? <span class="faq-arrow">+</span></summary>
+      <p class="faq-a">Cash, Venmo, Cash App, and Zelle all work. Payment is due at the end of your appointment once you've seen the results and you're happy.</p>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Do you service all car types? <span class="faq-arrow">+</span></summary>
+      <p class="faq-a">Cars, SUVs, and small trucks, yes! For larger vehicles like full-size vans or pickup trucks, pricing may be slightly higher. Just mention it when you book.</p>
+    </details>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Lovey<span>Details</span></div>
+  <p>Mobile Car Detailing · College Park, MD</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#booking">Book</a>
+    <a href="#faq">FAQ</a>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll for anchors
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const el = document.querySelector(a.getAttribute('href'));
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
